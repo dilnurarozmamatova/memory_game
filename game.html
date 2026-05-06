@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Memory Game</title>
+  <style>
+    .grid {display:grid; grid-template-columns:repeat(4,80px); gap:10px;}
+    .card {width:80px;height:80px;background:#444;color:white;
+           display:flex;align-items:center;justify-content:center;
+           font-size:24px;cursor:pointer;}
+  </style>
+</head>
+<body>
+
+<h2>Memory Game</h2>
+<div class="grid" id="game"></div>
+
+<script>
+let symbols = ["🍎","🍌","🍇","🍒","🍎","🍌","🍇","🍒"];
+symbols.sort(()=>Math.random()-0.5);
+
+let first=null, second=null;
+let lock=false;
+
+symbols.forEach((sym,i)=>{
+  let div=document.createElement("div");
+  div.className="card";
+  div.dataset.sym=sym;
+
+  div.onclick=()=>{
+    if(lock || div.innerText) return;
+    div.innerText=sym;
+
+    if(!first){ first=div; return;}
+    second=div;
+    lock=true;
+
+    if(first.dataset.sym===second.dataset.sym){
+      first=null; second=null; lock=false;
+    } else {
+      setTimeout(()=>{
+        first.innerText="";
+        second.innerText="";
+        first=null; second=null; lock=false;
+      },800);
+    }
+  };
+  game.appendChild(div);
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
